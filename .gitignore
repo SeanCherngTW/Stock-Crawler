@@ -1,0 +1,7 @@
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+phantomjs-2.1.1-macosx/
+phantomjs-2.1.1-linux-x86_64.tar.bz2
+ghostdriver.log

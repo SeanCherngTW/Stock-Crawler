@@ -2,6 +2,7 @@ import time
 import json
 import requests
 import redis_manager
+from config import logger
 from bs4 import BeautifulSoup
 from datetime import datetime
 from datetime import timedelta
@@ -25,10 +26,10 @@ class StockCrawler:
             res = eval(self.redis_manager.get(stock_id))
             update_date = datetime.strptime(res['update_date'], "%Y/%m/%d %H:%M")
             if update_date > last_market_closed:
-                print('Get data from Redis')
+                logger.info('Get data from Redis')
                 return res
 
-        print('Get data from Crawler')
+        logger.info('Get data from Crawler')
         url = 'https://goodinfo.tw/StockInfo/StockDetail.asp?STOCK_ID={}'.format(stock_id)
         self.driver.get(url)
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')

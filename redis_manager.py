@@ -4,8 +4,7 @@ import redis
 
 class RedisManager:
     def __init__(self, ip, port):
-        self.redis_ip = 'redis://{}:{}'.format(ip, port)
-        self.redis_client = redis.StrictRedis.from_url(self.redis_ip)
+        self.redis_client = redis.Redis(host='redis', port=6379)
 
     def exists(self, key):
         return self.redis_client.exists(key)

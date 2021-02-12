@@ -1,3 +1,7 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+
 import time
 import json
 import requests
@@ -6,12 +10,10 @@ from config import logger
 from bs4 import BeautifulSoup
 from datetime import datetime
 from datetime import timedelta
-from selenium import webdriver
 
 
 class StockCrawler:
     def __init__(self):
-        self.driver = webdriver.PhantomJS(executable_path='./phantomjs-2.1.1-macosx/bin/phantomjs')
         self.redis_manager = redis_manager.RedisManager('127.0.0.1', '6379')
 
     def get_stock_info(self, stock_id, check_redis=True):
@@ -31,8 +33,14 @@ class StockCrawler:
 
         logger.info('Get data from Crawler')
         url = 'https://goodinfo.tw/StockInfo/StockDetail.asp?STOCK_ID={}'.format(stock_id)
-        self.driver.get(url)
-        soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
+                AppleWebKit/537.36 (KHTML, like Gecko) \
+                    Chrome/65.0.3325.181 Safari/537.36'
+        }
+        res = requests.get(url, headers=headers)
+        res.encoding = 'utf-8'
+        soup = BeautifulSoup(res.text, 'html.parser')
 
         res = {}
         res['id'] = stock_id

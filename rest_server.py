@@ -1,6 +1,11 @@
+#! /usr/bin/env python
+#encoding: utf-8
+
+# http://127.0.0.1:2330/overview?stock_id=2330
+
 from config import logger
 from stock_crawler import StockCrawler
-from flask import Flask, request, jsonify, Response, render_template
+from flask import Flask, request
 
 app = Flask(__name__)
 crawler = StockCrawler()

@@ -1,11 +1,11 @@
+import os
 import json
 import redis
-from config import redis_to_go_ip, redis_to_go_port
 
 
 class RedisManager:
     def __init__(self, ip, port):
-        self.redis_client = redis.Redis(host=redis_to_go_ip, port=redis_to_go_port)
+        self.redis_client = redis.from_url(os.getenv('REDISTOGO_URL', '127.0.0.1:6379'))
 
     def exists(self, key):
         return self.redis_client.exists(key)
